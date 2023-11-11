@@ -7,7 +7,7 @@ export abstract class EntityRepository<T extends Document> {
     entityFilterQuery: FilterQuery<T>,
     projection?: Record<string, unknown>,
   ): Promise<T | null> {
-    return this.entityModel
+    return await this.entityModel
       .findOne(entityFilterQuery, {
         _id: 0,
         __v: 0,
