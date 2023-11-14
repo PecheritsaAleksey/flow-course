@@ -22,6 +22,13 @@ export class User extends Entity {
   @ApiProperty({ example: 'jasduas8udo9asuda81o212u21' })
   @Prop({ required: true })
   password: string;
+
+  @ApiProperty({ example: 'USER' })
+  @Prop({
+    type: [{ type: String, enum: ['USER', 'ADMIN'] }],
+    default: ['USER'],
+  })
+  roles: string[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

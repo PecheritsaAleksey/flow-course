@@ -16,9 +16,6 @@ export class AuthController {
 
   @Post('register')
   register(@Body() userDto: CreateUserDto) {
-
-    console.log(process.env.PRIVATE_KEY);
-
     return this.authService.register(userDto);
   }
 }

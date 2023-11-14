@@ -9,7 +9,6 @@ export abstract class EntityRepository<T extends Document> {
   ): Promise<T | null> {
     return await this.entityModel
       .findOne(entityFilterQuery, {
-        _id: 0,
         __v: 0,
         ...projection,
       })
@@ -22,7 +21,6 @@ export abstract class EntityRepository<T extends Document> {
   ): Promise<T[] | null> {
     return this.entityModel
       .find(entityFilterQuery, {
-        _id: 0,
         __v: 0,
         ...projection,
       })
