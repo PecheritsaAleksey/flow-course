@@ -11,7 +11,7 @@ import { CreateUserDto } from '../users/dto/create-user.dto';
 import { UsersService } from '../users/users.service';
 
 import { User } from '../users/schemas/user.schema';
-import { ResponseDto } from './dto/response.dto';
+import { AuthResponseDto } from './dto/response.dto';
 
 @Injectable()
 export class AuthService {
@@ -25,7 +25,7 @@ export class AuthService {
     return this.generateToken(user);
   }
 
-  async register(userDto: CreateUserDto): Promise<ResponseDto> {
+  async register(userDto: CreateUserDto): Promise<AuthResponseDto> {
     const candidate = await this.usersService.getUserByEmail(userDto.email);
     if (candidate) {
       throw new HttpException(
@@ -41,7 +41,7 @@ export class AuthService {
     return this.generateToken(user);
   }
 
-  private async generateToken(user: User): Promise<ResponseDto> {
+  private async generateToken(user: User): Promise<AuthResponseDto> {
     const payload = { email: user.email, id: user._id, roles: user.roles };
     return {
       token: this.jwtService.sign(payload),

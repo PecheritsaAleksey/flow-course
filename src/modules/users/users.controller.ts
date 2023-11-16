@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Get,
-  Body,
-  Patch,
-  Param,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Body, Patch, Param, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './schemas/user.schema';
@@ -21,6 +14,9 @@ export class UsersController {
 
   @ApiOperation({ summary: 'Get user by id' })
   @ApiResponse({ status: 200, type: User })
+  @Roles('ADMIN')
+  @UseGuards(RolesAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get(':userId')
   async getUser(@Param('userId') userId: string): Promise<User> {
     return this.usersService.getUserById(userId);
@@ -38,6 +34,7 @@ export class UsersController {
 
   @ApiOperation({ summary: 'Update user' })
   @ApiResponse({ status: 200, type: User })
+  @UseGuards(JwtAuthGuard)
   @Patch(':userId')
   async updateUser(
     @Param('userId') userId: string,
