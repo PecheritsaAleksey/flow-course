@@ -7,6 +7,13 @@
 */*.log
 *npm-debug.log*
 
+# next.js
+*/.next/
+*/out/
+
+# production
+*/build
+
 # OS
 */.DS_Store
 
