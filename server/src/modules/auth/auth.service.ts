@@ -12,6 +12,7 @@ import { UsersService } from '../users/users.service';
 
 import { User } from '../users/schemas/user.schema';
 import { AuthResponseDto } from './dto/response.dto';
+import { AuthTokensDto } from './dto/tokens.dto';
 
 @Injectable()
 export class AuthService {
@@ -22,7 +23,12 @@ export class AuthService {
 
   async login(userDto: LoginUserDto) {
     const user = await this.validateUser(userDto);
-    return this.generateToken(user);
+    const tokens = await this.generateTokens(user);
+    return {
+      userEmail: user.email,
+      userName: `${user.firstName} ${user.lastName}`,
+      ...tokens,
+    };
   }
 
   async register(userDto: CreateUserDto): Promise<AuthResponseDto> {
@@ -38,15 +44,25 @@ export class AuthService {
       ...userDto,
       password: hashedPassword,
     });
-    return this.generateToken(user);
-  }
-
-  private async generateToken(user: User): Promise<AuthResponseDto> {
-    const payload = { email: user.email, id: user._id, roles: user.roles };
+    const tokens = await this.generateTokens(user);
     return {
-      token: this.jwtService.sign(payload),
       userEmail: user.email,
       userName: `${user.firstName} ${user.lastName}`,
+      ...tokens,
+    };
+  }
+
+  private async generateTokens(user: User): Promise<AuthTokensDto> {
+    const payload = { email: user.email, id: user._id, roles: user.roles };
+    return {
+      accessToken: this.jwtService.sign(payload, {
+        secret: process.env.PRIVATE_ACCESS_KEY,
+        expiresIn: '24h',
+      }),
+      refreshToken: this.jwtService.sign(payload, {
+        secret: process.env.PRIVATE_REFRESH_KEY,
+        expiresIn: '30d',
+      }),
     };
   }
 

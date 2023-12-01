@@ -38,7 +38,9 @@ export class RolesAuthGuard implements CanActivate {
         throw new UnauthorizedException({ message: 'User is not authorized' });
       }
 
-      const user = this.jwtService.verify(token);
+      const user = this.jwtService.verify(token, {
+        secret: process.env.PRIVATE_ACCESS_KEY,
+      });
 
       return user.roles.some((role: string) => requiredRoles.includes(role));
     } catch (error) {
