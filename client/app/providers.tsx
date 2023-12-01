@@ -1,6 +1,6 @@
 "use client";
 
-import { ReduxProvider } from "@/redux/provider";
+import { ReduxProvider } from "@/store/provider";
 import { ThemeProvider } from "next-themes";
 
 export function Providers({ children }: { children: React.ReactNode }) {

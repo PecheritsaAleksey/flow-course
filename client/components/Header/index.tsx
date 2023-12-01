@@ -4,11 +4,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import ThemeToggler from "./ThemeToggler";
 import menuData from "./menuData";
-import { useAppSelector } from "@/redux/store";
 
 const Header = () => {
-  const user = useAppSelector((state) => state.authReducer.value.user);
-
   // Navbar toggle
   const [navbarOpen, setNavbarOpen] = useState(false);
   const navbarToggleHandler = () => {
@@ -153,7 +150,6 @@ const Header = () => {
                 </nav>
               </div>
               <div className="flex items-center justify-end pr-16 lg:pr-0">
-                <p>Hello, {user.name}</p>
                 <Link
                   href="/signin"
                   className="hidden px-7 py-3 text-base font-bold text-dark hover:opacity-70 dark:text-white md:block"

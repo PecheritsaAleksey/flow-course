@@ -1,22 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useDispatch } from "react-redux";
-import { logIn } from "@/redux/features/auth-slice";
-import { AppDispatch } from "@/redux/store";
 
 const SigninPage = () => {
-  const dispatch = useDispatch<AppDispatch>();
-
   const onSignInHandler = (e) => {
     e.preventDefault();
-
-    dispatch(
-      logIn({
-        name: "John Doe",
-        email: "DqS5H@example.com",
-      })
-    );
   };
 
   return (
