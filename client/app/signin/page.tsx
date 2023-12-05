@@ -1,10 +1,16 @@
 "use client";
 
 import Link from "next/link";
+import { FormEvent } from "react";
+import { useLoginMutation } from "@/store/services/auth";
 
 const SigninPage = () => {
-  const onSignInHandler = (e) => {
+  const [login, { isLoading }] = useLoginMutation();
+
+  const onSignInHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const data = Object.fromEntries(new FormData(e.currentTarget));
+    await login(data).unwrap();
   };
 
   return (
@@ -20,7 +26,7 @@ const SigninPage = () => {
                 <div className="mb-8 flex items-center justify-center">
                   <span className="hidden h-[1px] w-full max-w-[70px] bg-body-color sm:block"></span>
                 </div>
-                <form>
+                <form onSubmit={onSignInHandler}>
                   <div className="mb-8">
                     <label
                       htmlFor="email"
@@ -93,10 +99,7 @@ const SigninPage = () => {
                     </div>
                   </div>
                   <div className="mb-6">
-                    <button
-                      onClick={onSignInHandler}
-                      className="flex w-full items-center justify-center rounded-md bg-primary px-9 py-4 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp"
-                    >
+                    <button className="flex w-full items-center justify-center rounded-md bg-primary px-9 py-4 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp">
                       Sign in
                     </button>
                   </div>

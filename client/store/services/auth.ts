@@ -4,11 +4,11 @@ import { LoginResponse } from "@/types/auth/login";
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080",
+    baseUrl: "http://localhost:8080/api/auth",
   }),
   endpoints: (builder) => ({
-    login: builder.mutation<LoginResponse, void>({
-      query: () => "api/login",
+    login: builder.mutation<LoginResponse, any>({
+      query: (data: any) => ({ url: "/login", method: "POST", body: data }),
     }),
     getAuthData: builder.query<LoginResponse, { token: string }>({
       query: ({ token }) => ({
