@@ -30,7 +30,12 @@ const slice = createSlice({
       if (isBrowser()) {
         localStorage.removeItem("user");
       }
-      return initialState;
+      return {
+        accessToken: "",
+        refreshToken: "",
+        userName: "",
+        userEmail: "",
+      };
     },
     expireToken: (state, action: PayloadAction<string[]>) => {
       expireCookies(action.payload);
@@ -62,10 +67,20 @@ const slice = createSlice({
         }
       )
       .addMatcher(
-        authApi.endpoints.getAuthData.matchFulfilled,
+        authApi.endpoints.register.matchFulfilled,
         (_state, { payload }) => {
+          // set the token and refreshToken
           setAuthCookie(payload.accessToken, AUTH_TOKEN);
           setAuthCookie(payload.refreshToken, AUTH_REFRESH_TOKEN);
+
+          localStorage.setItem(
+            "user",
+            JSON.stringify({
+              userName: payload.userName,
+              userEmail: payload.userEmail,
+            })
+          );
+
           return payload;
         }
       );
