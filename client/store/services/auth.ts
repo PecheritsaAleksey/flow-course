@@ -13,7 +13,17 @@ export const authApi = createApi({
     register: builder.mutation<LoginResponse, any>({
       query: (data: any) => ({ url: "/register", method: "POST", body: data }),
     }),
+    getAuthData: builder.query<LoginResponse, { token: string }>({
+      query: ({ token }) => ({
+        url: "/auth-data",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation, useGetAuthDataQuery } =
+  authApi;

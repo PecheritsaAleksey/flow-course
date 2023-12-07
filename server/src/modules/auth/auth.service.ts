@@ -52,12 +52,27 @@ export class AuthService {
     };
   }
 
+  async authData(user: User): Promise<AuthResponseDto> {
+    const tokens = await this.generateTokens(user);
+    return {
+      userEmail: user.email,
+      userName: `${user.firstName} ${user.lastName}`,
+      ...tokens,
+    };
+  }
+
   private async generateTokens(user: User): Promise<AuthTokensDto> {
-    const payload = { email: user.email, id: user._id, roles: user.roles };
+    const payload = {
+      email: user.email,
+      id: user._id,
+      roles: user.roles,
+      firstName: user.firstName,
+      lastName: user.lastName,
+    };
     return {
       accessToken: this.jwtService.sign(payload, {
         secret: process.env.PRIVATE_ACCESS_KEY,
-        expiresIn: '24h',
+        expiresIn: '5s',
       }),
       refreshToken: this.jwtService.sign(payload, {
         secret: process.env.PRIVATE_REFRESH_KEY,

@@ -10,14 +10,9 @@ import {
 } from "@/lib/cookies";
 import { LoginResponse } from "@/types/auth/login";
 
-const isBrowser = () => typeof window !== "undefined";
-const userInfo = isBrowser() && JSON.parse(localStorage.getItem("user"));
-
 const initialState: Partial<LoginResponse> = {
-  accessToken: getAuthCookie(AUTH_TOKEN),
-  refreshToken: getAuthCookie(AUTH_REFRESH_TOKEN),
-  userName: userInfo?.userName,
-  userEmail: userInfo?.userEmail,
+  userName: undefined,
+  userEmail: undefined,
 };
 
 const slice = createSlice({
@@ -27,14 +22,10 @@ const slice = createSlice({
     logout: () => {
       // remove the token and refreshToken
       removeCookies([AUTH_TOKEN, AUTH_REFRESH_TOKEN]);
-      if (isBrowser()) {
-        localStorage.removeItem("user");
-      }
+
       return {
-        accessToken: "",
-        refreshToken: "",
-        userName: "",
-        userEmail: "",
+        userName: undefined,
+        userEmail: undefined,
       };
     },
     expireToken: (state, action: PayloadAction<string[]>) => {
@@ -55,14 +46,6 @@ const slice = createSlice({
           setAuthCookie(payload.accessToken, AUTH_TOKEN);
           setAuthCookie(payload.refreshToken, AUTH_REFRESH_TOKEN);
 
-          localStorage.setItem(
-            "user",
-            JSON.stringify({
-              userName: payload.userName,
-              userEmail: payload.userEmail,
-            })
-          );
-
           return payload;
         }
       )
@@ -73,14 +56,15 @@ const slice = createSlice({
           setAuthCookie(payload.accessToken, AUTH_TOKEN);
           setAuthCookie(payload.refreshToken, AUTH_REFRESH_TOKEN);
 
-          localStorage.setItem(
-            "user",
-            JSON.stringify({
-              userName: payload.userName,
-              userEmail: payload.userEmail,
-            })
-          );
-
+          return payload;
+        }
+      )
+      .addMatcher(
+        authApi.endpoints.getAuthData.matchFulfilled,
+        (_state, { payload }) => {
+          setAuthCookie(payload.accessToken, AUTH_TOKEN);
+          setAuthCookie(payload.refreshToken, AUTH_REFRESH_TOKEN);
+          
           return payload;
         }
       );
