@@ -4,9 +4,12 @@ import { usePathname, useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { getValidAuthTokens } from "@/lib/cookies";
 import { RootState } from "@/store";
-import { useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { logout } from "@/store/slices/auth";
-import { useGetAuthDataQuery } from "@/store/services/auth";
+import {
+  useGetAuthDataQuery,
+  useLazyRefreshGetAuthDataQuery,
+} from "@/store/services/auth";
 
 const ALLOWED_URLS = ["/signin", "/signup"];
 
@@ -16,6 +19,14 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const { userEmail } = useSelector((state: RootState) => state.auth);
   const { accessToken, refreshToken } = getValidAuthTokens();
 
+  // if the user doesnt have a valid token, redirect to login page
+  useLayoutEffect(() => {
+    if (!accessToken || !refreshToken) {
+      push("/signin");
+      dispatch(logout());
+    }
+  }, [accessToken, refreshToken, push]);
+
   const { error: authDetailsFetchError, isLoading } = useGetAuthDataQuery(
     { token: accessToken || "" },
     {
@@ -23,25 +34,22 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
     }
   );
 
-  if (
-    authDetailsFetchError &&
-    "status" in authDetailsFetchError &&
-    authDetailsFetchError.status === 403
-  ) {
-    //TODO: Use refresh
-    dispatch(logout());
-  }
+  const [trigger, result] = useLazyRefreshGetAuthDataQuery();
 
-  // if the user doesnt have a valid token, redirect to login page
-  useLayoutEffect(() => {
-    if (!accessToken) {
-      push("/signin");
-      dispatch(logout());
+  useEffect(() => {
+    if (
+      accessToken &&
+      refreshToken &&
+      authDetailsFetchError &&
+      "status" in authDetailsFetchError &&
+      authDetailsFetchError.status === 403
+    ) {
+      trigger({ token: refreshToken });
+      if (!result?.data) {
+        dispatch(logout());
+      }
     }
-
-    if (accessToken) {
-    }
-  }, [accessToken, push]);
+  }, [accessToken, refreshToken, authDetailsFetchError, trigger]);
 
   const pathname = usePathname();
   if (ALLOWED_URLS.includes(pathname) || userEmail) {
@@ -49,7 +57,7 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   }
 
   // optional: show a loading indicator
-  if (isLoading || userEmail === undefined) {
+  if (isLoading || result?.isLoading || userEmail === undefined) {
     return <div>Loading...</div>;
   }
 };

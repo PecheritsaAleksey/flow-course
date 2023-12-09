@@ -22,8 +22,21 @@ export const authApi = createApi({
         },
       }),
     }),
+    refreshGetAuthData: builder.query<LoginResponse, { token: string }>({
+      query: ({ token }) => ({
+        url: "/refresh-auth-data",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useGetAuthDataQuery } =
-  authApi;
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+  useGetAuthDataQuery,
+  useLazyRefreshGetAuthDataQuery,
+} = authApi;

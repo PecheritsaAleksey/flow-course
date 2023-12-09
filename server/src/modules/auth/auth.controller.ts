@@ -15,6 +15,7 @@ import { AuthService } from './auth.service';
 import { AuthResponseDto } from './dto/response.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { RequestWithUser } from './dto/req-user.dto';
+import { RefreshJwtAuthGuard } from './refresh-jwt-auth.guard';
 
 @ApiTags('Auth')
 @Controller('api/auth')
@@ -39,6 +40,14 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('auth-data')
   authData(@Req() req: RequestWithUser) {
+    const user = req.user;
+    return this.authService.authData(user);
+  }
+
+  @ApiResponse({ status: 200, type: AuthResponseDto })
+  @UseGuards(RefreshJwtAuthGuard)
+  @Get('refresh-auth-data')
+  refreshAuthData(@Req() req: RequestWithUser) {
     const user = req.user;
     return this.authService.authData(user);
   }

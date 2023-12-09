@@ -64,7 +64,16 @@ const slice = createSlice({
         (_state, { payload }) => {
           setAuthCookie(payload.accessToken, AUTH_TOKEN);
           setAuthCookie(payload.refreshToken, AUTH_REFRESH_TOKEN);
-          
+
+          return payload;
+        }
+      )
+      .addMatcher(
+        authApi.endpoints.refreshGetAuthData.matchFulfilled,
+        (_state, { payload }) => {
+          setAuthCookie(payload.accessToken, AUTH_TOKEN);
+          setAuthCookie(payload.refreshToken, AUTH_REFRESH_TOKEN);
+
           return payload;
         }
       );

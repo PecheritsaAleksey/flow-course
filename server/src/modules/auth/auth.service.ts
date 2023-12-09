@@ -72,7 +72,7 @@ export class AuthService {
     return {
       accessToken: this.jwtService.sign(payload, {
         secret: process.env.PRIVATE_ACCESS_KEY,
-        expiresIn: '5s',
+        expiresIn: '24h',
       }),
       refreshToken: this.jwtService.sign(payload, {
         secret: process.env.PRIVATE_REFRESH_KEY,
