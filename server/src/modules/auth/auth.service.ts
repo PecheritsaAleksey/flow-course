@@ -64,11 +64,14 @@ export class AuthService {
   private async generateTokens(user: User): Promise<AuthTokensDto> {
     const payload = {
       email: user.email,
-      id: user._id,
+      _id: user._id,
       roles: user.roles,
       firstName: user.firstName,
       lastName: user.lastName,
     };
+
+    console.log(payload);
+
     return {
       accessToken: this.jwtService.sign(payload, {
         secret: process.env.PRIVATE_ACCESS_KEY,

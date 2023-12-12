@@ -3,6 +3,7 @@ import { UsersRepository } from './users.repository';
 import { User } from './schemas/user.schema';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateQuery } from 'mongoose';
 
 @Injectable()
 export class UsersService {
@@ -24,7 +25,10 @@ export class UsersService {
     return this.usersRepository.create(user);
   }
 
-  async updateUser(_id: string, userUpdates: UpdateUserDto): Promise<User> {
+  async updateUser(
+    _id: string,
+    userUpdates: UpdateUserDto | UpdateQuery<unknown>,
+  ): Promise<User> {
     return this.usersRepository.findOneAndUpdate({ _id }, userUpdates);
   }
 }

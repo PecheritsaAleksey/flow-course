@@ -28,6 +28,7 @@ export class JwtAuthGuard implements CanActivate {
       const user = this.jwtService.verify(token, {
         secret: process.env.PRIVATE_ACCESS_KEY,
       });
+
       req.user = user;
       return true;
     } catch (error) {
