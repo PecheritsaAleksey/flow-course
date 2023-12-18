@@ -70,8 +70,6 @@ export class AuthService {
       lastName: user.lastName,
     };
 
-    console.log(payload);
-
     return {
       accessToken: this.jwtService.sign(payload, {
         secret: process.env.PRIVATE_ACCESS_KEY,
