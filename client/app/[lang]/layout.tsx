@@ -10,7 +10,9 @@ import { Providers } from "./providers";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import ScrollToTop from "@/components/ScrollToTop";
-import "../styles/index.css";
+import "../../styles/index.css";
+
+import { defaultLocale } from "@/middleware";
 
 const AuthWrapper = dynamic(() => import("@/components/Auth/AuthWrapper"), {
   ssr: false,
@@ -18,10 +20,10 @@ const AuthWrapper = dynamic(() => import("@/components/Auth/AuthWrapper"), {
 
 const NOT_LAYOUT_COMPONENTS = ["/signin", "/signup", "/error"];
 
-const LayoutComponents = ({ children }) => {
+const LayoutComponents = ({ children, lang }) => {
   return (
     <>
-      <Header />
+      <Header lang={lang} />
       {children}
       <Footer />
     </>
@@ -30,8 +32,10 @@ const LayoutComponents = ({ children }) => {
 
 export default function RootLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: { lang: string };
 }) {
   const pathname = usePathname();
 
@@ -40,7 +44,7 @@ export default function RootLayout({
     : LayoutComponents;
 
   return (
-    <html suppressHydrationWarning lang="en">
+    <html suppressHydrationWarning lang={params.lang ?? defaultLocale}>
       {/*
         <head /> will contain the components returned by the nearest parent
         head.js. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
@@ -50,7 +54,7 @@ export default function RootLayout({
       <body className="dark:bg-black">
         <Providers>
           <AuthWrapper>
-            <CurrentLayout>{children}</CurrentLayout>
+            <CurrentLayout lang={params.lang}>{children}</CurrentLayout>
             <ScrollToTop />
           </AuthWrapper>
         </Providers>

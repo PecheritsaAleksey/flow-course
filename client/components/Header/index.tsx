@@ -9,7 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { logout } from "@/store/slices/auth";
 
-const Header = () => {
+import { dictionary } from "@/locales";
+
+const Header = ({ lang }) => {
   const dispatch = useDispatch();
 
   const stateAuth = useSelector((state: RootState) => state.auth);
@@ -181,7 +183,7 @@ const Header = () => {
                       onClick={handleProfileSubmenu}
                       className="flex cursor-pointer items-center justify-between py-2 text-base text-dark group-hover:opacity-70 dark:text-white lg:mr-0 lg:inline-flex lg:px-0 lg:py-6"
                     >
-                      {`Hello, ${userName}`}
+                      {`${dictionary[lang]?.hello}, ${userName}`}
                       <span className="pl-3">
                         <svg width="15" height="14" viewBox="0 0 15 14">
                           <path
