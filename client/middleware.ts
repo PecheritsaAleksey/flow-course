@@ -14,11 +14,15 @@ function getLocale(request: Request): string {
 
   const headersObject = Object.fromEntries(headers.entries());
   const languages = new Negotiator({ headers: headersObject }).languages();
-  return match(languages, locales, defaultLocale);
+  const currentLang = match(languages, locales, defaultLocale);
+
+  return currentLang;
 }
 
 export function middleware(request: NextRequest) {
-  let locale = getLocale(request) ?? defaultLocale;
+  const cookieLocale = request.cookies.get("lang").value;
+
+  const locale = cookieLocale ?? getLocale(request) ?? defaultLocale;
 
   const pathname = request.nextUrl.pathname;
 
@@ -26,7 +30,11 @@ export function middleware(request: NextRequest) {
 
   // e.g. incoming request is /products
   // The new URL is now /en/products
-  return NextResponse.rewrite(newUrl);
+  // return NextResponse.rewrite(newUrl).cookies.set("lang", "123");
+  const response = NextResponse.rewrite(newUrl);
+  response.cookies.set("lang", locale);
+
+  return response;
 }
 
 export const config = {
