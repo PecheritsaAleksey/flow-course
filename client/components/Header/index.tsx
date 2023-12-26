@@ -10,6 +10,7 @@ import { RootState } from "@/store";
 import { logout } from "@/store/slices/auth";
 
 import { dictionary } from "@/locales";
+import LangToggler from "./LangToggler";
 
 const Header = ({ lang }) => {
   const dispatch = useDispatch();
@@ -225,6 +226,9 @@ const Header = ({ lang }) => {
                 )}
                 <div>
                   <ThemeToggler />
+                </div>
+                <div>
+                  <LangToggler />
                 </div>
               </div>
             </div>

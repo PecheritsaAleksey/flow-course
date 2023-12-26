@@ -10,11 +10,11 @@ import Pricing from "@/components/Pricing";
 import Testimonials from "@/components/Testimonials";
 import Video from "@/components/Video";
 
-export default function Home() {
+export default function Home({ params: { lang } }) {
   return (
     <>
       <ScrollUp />
-      <Hero />
+      <Hero lang={lang} />
       <Features />
       <Video />
       <Brands />

@@ -24,6 +24,20 @@ export const getAuthCookie = (name: string) => {
   return Buffer.from(cookie, "base64").toString("ascii");
 };
 
+export const setLangCookie = (lang: string) => {
+  setCookie("lang", lang, {
+    path: "/",
+  });
+};
+
+export const getLangCookie = () => {
+  const cookie = getCookie("lang");
+
+  if (!cookie) return undefined;
+
+  return cookie;
+};
+
 export const removeCookies = (cookies: string[]) => {
   cookies.forEach((cookie) => {
     deleteCookie(cookie);
