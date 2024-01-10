@@ -20,7 +20,7 @@ function getLocale(request: Request): string {
 }
 
 export function middleware(request: NextRequest) {
-  const cookieLocale = request.cookies.get("lang").value;
+  const cookieLocale = request.cookies.get("lang")?.value;
 
   const locale = cookieLocale ?? getLocale(request) ?? defaultLocale;
 

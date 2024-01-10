@@ -8,7 +8,10 @@ import Link from "next/link";
 import { useRegisterMutation } from "@/store/services/auth";
 import { RootState } from "@/store";
 
-const SignupPage = () => {
+import { dictionary } from "@/locales";
+import LangToggler from "@/components/Header/LangToggler";
+
+const SignupPage = ({ params: { lang } }) => {
   const [register, { isLoading }] = useRegisterMutation();
   const { userEmail } = useSelector((state: RootState) => state.auth);
   const { push } = useRouter();
@@ -32,10 +35,10 @@ const SignupPage = () => {
             <div className="w-full px-4">
               <div className="mx-auto max-w-[500px] rounded-md bg-primary bg-opacity-5 px-6 py-10 dark:bg-dark sm:p-[60px]">
                 <h3 className="mb-3 text-center text-2xl font-bold text-black dark:text-white sm:text-3xl">
-                  Create your account
+                  {dictionary[lang]?.createYourAccount}
                 </h3>
                 <p className="mb-11 text-center text-base font-medium text-body-color">
-                  It’s totally free and super easy
+                  {dictionary[lang]?.itsFree}
                 </p>
                 <div className="mb-8 flex items-center justify-center">
                   <span className="hidden h-[1px] w-full max-w-[60px] bg-body-color sm:block"></span>
@@ -47,13 +50,13 @@ const SignupPage = () => {
                       className="mb-3 block text-sm font-medium text-dark dark:text-white"
                     >
                       {" "}
-                      First Name{" "}
+                      {dictionary[lang]?.yourFirstName}{" "}
                     </label>
                     <input
                       type="text"
                       name="firstName"
                       required
-                      placeholder="Enter your first name"
+                      placeholder={dictionary[lang]?.firstNamePlaceholder}
                       className="w-full rounded-md border border-transparent px-6 py-3 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
                     />
                   </div>
@@ -63,13 +66,13 @@ const SignupPage = () => {
                       className="mb-3 block text-sm font-medium text-dark dark:text-white"
                     >
                       {" "}
-                      Last Name{" "}
+                      {dictionary[lang]?.yourLastName}{" "}
                     </label>
                     <input
                       type="text"
                       name="lastName"
                       required
-                      placeholder="Enter your last name"
+                      placeholder={dictionary[lang]?.lastNamePlaceholder}
                       className="w-full rounded-md border border-transparent px-6 py-3 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
                     />
                   </div>
@@ -79,13 +82,13 @@ const SignupPage = () => {
                       className="mb-3 block text-sm font-medium text-dark dark:text-white"
                     >
                       {" "}
-                      Email{" "}
+                      {dictionary[lang]?.yourEmail}{" "}
                     </label>
                     <input
                       type="email"
                       name="email"
                       required
-                      placeholder="Enter your Email"
+                      placeholder={dictionary[lang]?.emailPlaceholder}
                       className="w-full rounded-md border border-transparent px-6 py-3 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
                     />
                   </div>
@@ -95,17 +98,17 @@ const SignupPage = () => {
                       className="mb-3 block text-sm font-medium text-dark dark:text-white"
                     >
                       {" "}
-                      Your Password{" "}
+                      {dictionary[lang]?.yourPassword}{" "}
                     </label>
                     <input
                       type="password"
                       name="password"
                       required
-                      placeholder="Enter your Password"
+                      placeholder={dictionary[lang]?.passwordPlaceholder}
                       className="w-full rounded-md border border-transparent px-6 py-3 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
                     />
                   </div>
-                  <div className="mb-8 flex">
+                  {/* <div className="mb-8 flex">
                     <label
                       htmlFor="checkboxLabel"
                       className="flex cursor-pointer select-none text-sm font-medium text-body-color"
@@ -148,19 +151,22 @@ const SignupPage = () => {
                         </a>
                       </span>
                     </label>
-                  </div>
+                  </div> */}
                   <div className="mb-6">
                     <button className="flex w-full items-center justify-center rounded-md bg-primary px-9 py-4 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp">
-                      Sign up
+                      {dictionary[lang]?.signUp}
                     </button>
                   </div>
                 </form>
                 <p className="text-center text-base font-medium text-body-color">
-                  Already have an account?
+                  {dictionary[lang]?.alreadyHaveAnAccount}
                   <Link href="/signin" className="text-primary hover:underline">
-                    Sign in
+                    {dictionary[lang]?.signIn}
                   </Link>
                 </p>
+                <div>
+                  <LangToggler />
+                </div>
               </div>
             </div>
           </div>

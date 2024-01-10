@@ -203,7 +203,7 @@ const Header = ({ lang }) => {
                         onClick={handleLogout}
                         className="block rounded py-2.5 text-sm text-dark hover:opacity-70 dark:text-white lg:px-3"
                       >
-                        {"Logout"}
+                        {dictionary[lang]?.logout}
                       </button>
                     </div>
                   </div>

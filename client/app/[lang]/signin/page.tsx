@@ -6,8 +6,10 @@ import { useLoginMutation } from "@/store/services/auth";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { useRouter } from "next/navigation";
+import { dictionary } from "@/locales";
+import LangToggler from "@/components/Header/LangToggler";
 
-const SigninPage = () => {
+const SigninPage = ({ params: { lang } }) => {
   const [login, { isLoading }] = useLoginMutation();
   const { userEmail } = useSelector((state: RootState) => state.auth);
   const { push } = useRouter();
@@ -32,7 +34,7 @@ const SigninPage = () => {
             <div className="w-full px-4">
               <div className="mx-auto max-w-[500px] rounded-md bg-primary bg-opacity-5 px-6 py-10 dark:bg-dark sm:p-[60px]">
                 <h3 className="mb-3 text-center text-2xl font-bold text-black dark:text-white sm:text-3xl">
-                  Sign in to your account
+                  {dictionary[lang]?.signInToYourAccount}
                 </h3>
                 <div className="mb-8 flex items-center justify-center">
                   <span className="hidden h-[1px] w-full max-w-[70px] bg-body-color sm:block"></span>
@@ -43,12 +45,12 @@ const SigninPage = () => {
                       htmlFor="email"
                       className="mb-3 block text-sm font-medium text-dark dark:text-white"
                     >
-                      Your Email
+                      {dictionary[lang]?.yourEmail}
                     </label>
                     <input
                       type="email"
                       name="email"
-                      placeholder="Enter your Email"
+                      placeholder={dictionary[lang]?.emailPlaceholder}
                       className="w-full rounded-md border border-transparent px-6 py-3 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
                     />
                   </div>
@@ -57,12 +59,12 @@ const SigninPage = () => {
                       htmlFor="password"
                       className="mb-3 block text-sm font-medium text-dark dark:text-white"
                     >
-                      Your Password
+                      {dictionary[lang]?.yourPassword}
                     </label>
                     <input
                       type="password"
                       name="password"
-                      placeholder="Enter your Password"
+                      placeholder={dictionary[lang]?.passwordPlaceholder}
                       className="w-full rounded-md border border-transparent px-6 py-3 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
                     />
                   </div>
@@ -72,22 +74,25 @@ const SigninPage = () => {
                         href="#0"
                         className="text-sm font-medium text-primary hover:underline"
                       >
-                        Forgot Password?
+                        {dictionary[lang]?.forgotPassword}
                       </a>
                     </div>
                   </div>
                   <div className="mb-6">
                     <button className="flex w-full items-center justify-center rounded-md bg-primary px-9 py-4 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp">
-                      Sign in
+                      {dictionary[lang]?.signIn}
                     </button>
                   </div>
                 </form>
                 <p className="text-center text-base font-medium text-body-color">
-                  Don’t you have an account?
+                  {dictionary[lang]?.dontHaveAnAccount}
                   <Link href="/signup" className="text-primary hover:underline">
-                    Sign up
+                    {dictionary[lang]?.signUp}
                   </Link>
                 </p>
+                <div>
+                  <LangToggler />
+                </div>
               </div>
             </div>
           </div>
