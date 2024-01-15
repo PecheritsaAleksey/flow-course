@@ -81,14 +81,14 @@ const Header = ({ lang }) => {
                 } `}
               >
                 <Image
-                  src="/images/logo/logo-2.svg"
+                  src="/images/logo/logo-2.png"
                   alt="logo"
                   width={140}
                   height={30}
                   className="w-full dark:hidden"
                 />
                 <Image
-                  src="/images/logo/logo.svg"
+                  src="/images/logo/logo.png"
                   alt="logo"
                   width={140}
                   height={30}
@@ -136,7 +136,7 @@ const Header = ({ lang }) => {
                             href={menuItem.path}
                             className={`flex py-2 text-base text-dark group-hover:opacity-70 dark:text-white lg:mr-0 lg:inline-flex lg:px-0 lg:py-6`}
                           >
-                            {menuItem.title}
+                            {`${dictionary[lang]?.[menuItem.title]}`}
                           </Link>
                         ) : (
                           <>

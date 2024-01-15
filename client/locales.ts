@@ -18,6 +18,13 @@ interface DictionaryEntry {
   lastNamePlaceholder: string;
   alreadyHaveAnAccount: string;
   logout: string;
+  menuCourses: string;
+
+  //Courses Page
+  coursesBreadcrumb: string;
+  coursesBreadcrumbDescription: string;
+  teach: string;
+  learn: string;
 }
 
 export const dictionary: Record<string, DictionaryEntry> = {
@@ -41,6 +48,11 @@ export const dictionary: Record<string, DictionaryEntry> = {
     lastNamePlaceholder: "Enter your last name",
     alreadyHaveAnAccount: "Already have an account?",
     logout: "Logout",
+    menuCourses: "Courses",
+    coursesBreadcrumb: "My Courses",
+    coursesBreadcrumbDescription: "This is the page with all of your courses",
+    teach: "I am teaching",
+    learn: "I am learning",
   },
   ru: {
     hello: "Привет",
@@ -62,5 +74,10 @@ export const dictionary: Record<string, DictionaryEntry> = {
     lastNamePlaceholder: "Введите вашу фамилию",
     alreadyHaveAnAccount: "Уже есть аккаунт?",
     logout: "Выйти",
+    menuCourses: "Курсы",
+    coursesBreadcrumb: "Мои курсы",
+    coursesBreadcrumbDescription: "Это страница со всеми вашими курсами",
+    teach: "Я обучаю",
+    learn: "Я изучаю",
   },
 };
