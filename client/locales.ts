@@ -25,6 +25,7 @@ interface DictionaryEntry {
   coursesBreadcrumbDescription: string;
   teach: string;
   learn: string;
+  addNewCourse: string;
 }
 
 export const dictionary: Record<string, DictionaryEntry> = {
@@ -53,6 +54,7 @@ export const dictionary: Record<string, DictionaryEntry> = {
     coursesBreadcrumbDescription: "This is the page with all of your courses",
     teach: "I am teaching",
     learn: "I am learning",
+    addNewCourse: "Add new course",
   },
   ru: {
     hello: "Привет",
@@ -79,5 +81,6 @@ export const dictionary: Record<string, DictionaryEntry> = {
     coursesBreadcrumbDescription: "Это страница со всеми вашими курсами",
     teach: "Я обучаю",
     learn: "Я изучаю",
+    addNewCourse: "Добавить новый курс",
   },
 };
