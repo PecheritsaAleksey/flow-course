@@ -18,6 +18,9 @@ export class Course extends Entity {
   @Prop({ required: true })
   name: string;
 
+  @ApiProperty({ example: 'This is a best course for web development' })
+  description: string;
+
   @ApiProperty({ example: 'web-development' })
   @Prop({ required: true, unique: true })
   urlName: string;

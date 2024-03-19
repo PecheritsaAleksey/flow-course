@@ -26,6 +26,17 @@ interface DictionaryEntry {
   teach: string;
   learn: string;
   addNewCourse: string;
+
+  //New Course Page
+  createYourNewCourse: string;
+  createYourNewCourseDescription: string;
+  courseName: string;
+  courseDescription: string;
+  courseNamePlaceholder: string;
+  courseDescriptionPlaceholder: string;
+  courseUrlName: string;
+  courseUrlNamePlaceholder: string;
+  createCourse: string;
 }
 
 export const dictionary: Record<string, DictionaryEntry> = {
@@ -55,6 +66,16 @@ export const dictionary: Record<string, DictionaryEntry> = {
     teach: "I am teaching",
     learn: "I am learning",
     addNewCourse: "Add new course",
+    createYourNewCourse: "Create your new course",
+    createYourNewCourseDescription:
+      "Now you only need co create a name and a description of your course",
+    courseName: "Course Name",
+    courseDescription: "Course Description",
+    courseNamePlaceholder: "Enter course name",
+    courseDescriptionPlaceholder: "Enter course description (optional)",
+    courseUrlName: "Course Url Address",
+    courseUrlNamePlaceholder: "Enter course url address",
+    createCourse: "Create Course",
   },
   ru: {
     hello: "Привет",
@@ -82,5 +103,15 @@ export const dictionary: Record<string, DictionaryEntry> = {
     teach: "Я обучаю",
     learn: "Я изучаю",
     addNewCourse: "Добавить новый курс",
+    createYourNewCourse: "Создайте свой новый курс",
+    createYourNewCourseDescription:
+      "Сейчас необходимо только придумать имя и описание для вашего курса",
+    courseName: "Название курса",
+    courseDescription: "Описание курса",
+    courseNamePlaceholder: "Введите название курса",
+    courseDescriptionPlaceholder: "Введите описание курса (не обязательно)",
+    courseUrlName: "Url адрес курса",
+    courseUrlNamePlaceholder: "Введите url адрес курса",
+    createCourse: "Создать курс",
   },
 };

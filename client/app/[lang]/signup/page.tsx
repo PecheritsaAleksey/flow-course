@@ -18,7 +18,7 @@ const SignupPage = ({ params: { lang } }) => {
 
   useEffect(() => {
     if (userEmail) {
-      push("/");
+      push("/my/courses");
     }
   }, [userEmail]);
 

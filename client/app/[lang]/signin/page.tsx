@@ -16,7 +16,7 @@ const SigninPage = ({ params: { lang } }) => {
 
   useEffect(() => {
     if (userEmail) {
-      push("/");
+      push("/my/courses");
     }
   }, [userEmail]);
 

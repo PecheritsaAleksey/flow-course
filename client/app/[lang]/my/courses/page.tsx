@@ -1,6 +1,7 @@
 import Breadcrumb from "@/components/Common/Breadcrumb";
 import CourseCard from "@/components/Courses/CourseCard";
 import { dictionary } from "@/locales";
+import Link from "next/link";
 
 const Courses = ({ params: { lang } }) => {
   const coursesTeaching = [
@@ -54,9 +55,11 @@ const Courses = ({ params: { lang } }) => {
             ))}
           </div>
           <div className="mx-4 my-8 flex items-center">
-            <button className="rounded-full bg-primary px-8 py-6 font-bold text-white hover:bg-opacity-80">
-              {dictionary[lang]?.addNewCourse}
-            </button>
+            <Link href={"/my/course/new"}>
+              <button className="rounded-full bg-primary px-8 py-6 font-bold text-white hover:bg-opacity-80">
+                {dictionary[lang]?.addNewCourse}
+              </button>
+            </Link>
           </div>
         </div>
       </section>
