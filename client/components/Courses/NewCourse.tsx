@@ -13,7 +13,7 @@ const NewCourse = ({ lang }) => {
   const onCreateCourseHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.currentTarget));
-    console.log(data);
+    await createCourse(data).unwrap();
   };
 
   const onNameChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,6 +55,7 @@ const NewCourse = ({ lang }) => {
                     </label>
                     <input
                       type="text"
+                      name="name"
                       placeholder={dictionary[lang]?.courseNamePlaceholder}
                       required
                       onChange={onNameChangeHandler}
@@ -70,6 +71,7 @@ const NewCourse = ({ lang }) => {
                     </label>
                     <input
                       type="text"
+                      name="description"
                       placeholder={
                         dictionary[lang]?.courseDescriptionPlaceholder
                       }
@@ -87,6 +89,7 @@ const NewCourse = ({ lang }) => {
                     </label>
                     <input
                       type="text"
+                      name="urlName"
                       required
                       value={courseUrlName}
                       onChange={onUrlInputChangeHandler}
@@ -97,8 +100,15 @@ const NewCourse = ({ lang }) => {
                 </div>
 
                 <div className="w-full px-4">
-                  <button className="rounded-md bg-primary px-9 py-4 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp">
-                    {dictionary[lang]?.createCourse}
+                  <button
+                    disabled={isLoading}
+                    className="rounded-md bg-primary px-9 py-4 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp"
+                  >
+                    {isLoading ? (
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75"></span>
+                    ) : (
+                      dictionary[lang]?.createCourse
+                    )}
                   </button>
                 </div>
               </div>
